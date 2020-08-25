@@ -24,6 +24,7 @@
   # - import_tasks: tasks/02_gcp_sdk.yml
   # - import_tasks: tasks/02_google_chrome.yml
   # - import_tasks: tasks/02_virtualbox.yml
+  # - import_tasks: tasks/02_vmware_player.yml
   # - import_tasks: tasks/02_vscode.yml
   # - import_tasks: tasks/03_kubectl_gcloud.yml
   # - import_tasks: tasks/04_minikube_gcloud.yml

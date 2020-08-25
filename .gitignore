@@ -6,3 +6,4 @@ files/*.deb
 files/*.tar.gz
 files/*.tar.xz
 files/*.zip
+files/*.bundle

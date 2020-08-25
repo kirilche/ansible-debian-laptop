@@ -1,0 +1,22 @@
+- name: NOsudo block
+  block:
+
+  # - name: Download vmware bundle package
+  #   get_url:
+  #     url: "{{ vmware_download_url }}"
+  #     dest: files/VMware-Player.bundle
+  #     force: no
+
+  - name: check if vmware installed
+    command: vmplayer -v
+    register: vmware_version
+    ignore_errors: yes
+    changed_when: no
+  #NOsudo block
+  become: no
+  
+- name: install vmware
+  command:
+    cmd: ./files/VMware-Player.bundle --console --required --eulas-agreed
+
+  when: vmware_version.rc != 0
