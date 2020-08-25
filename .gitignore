@@ -1,0 +1,8 @@
+.vault_pass.txt
+before.txt
+after.txt
+files/setup.sh
+files/*.deb
+files/*.tar.gz
+files/*.tar.xz
+files/*.zip

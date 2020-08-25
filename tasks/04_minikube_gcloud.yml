@@ -1,0 +1,15 @@
+- name: NOsudo block
+  block:
+  - name: check if minikube installed
+    command: minikube version
+    register: minikube_version
+    ignore_errors: yes
+    changed_when: no
+
+  - name: install minikube as gcloud component
+    command:
+      cmd: gcloud components install minikube
+    when: minikube_version.rc != 0
+  #NOsudo block
+  become: no
+  

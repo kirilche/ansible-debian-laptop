@@ -1,0 +1,67 @@
+- name: NOsudo block
+  block:
+
+  - name: Download TF ENV package
+    get_url:
+      url: "{{ tfenv_download_url }}"
+      dest: files/tfenv.tar.gz
+      force: no
+
+  - name: check if tfenv installed
+    command: tfenv --version
+    register: tfenv_version
+    ignore_errors: yes
+    changed_when: no
+
+  - name: command not found block 
+    block:
+    - name: Create dir {{ tfenv_path }}
+      file:
+        path: "{{ tfenv_path }}"
+        state: directory
+
+    - name: Unarchive
+      unarchive:
+        src: files/tfenv.tar.gz
+        dest: "{{ tfenv_path }}"
+        extra_opts: [--strip-components=1]
+        creates: "{{ tfenv_path }}/bin"
+
+    - name: add cli to $PATH
+      lineinfile:
+        path: "/home/{{ username }}/.bashrc"
+        line: "export PATH={{ tfenv_path }}/bin:$PATH"
+        state: present
+        insertafter: EOF
+    #block command not found    
+    when: tfenv_version.rc != 0
+
+  - name: TFenv install
+    block:
+    - name: get latest version
+      shell: |
+        {{ tfenv_path }}/bin/tfenv list-remote | head -n 1
+      register: tf_latest_version
+      ignore_errors: yes
+      changed_when: no
+
+    # - name: print latest version
+    #   debug:
+    #     var: tf_latest_version.stdout
+    - name: install latest version
+      shell: |
+        {{ tfenv_path }}/bin/tfenv install {{ tf_latest_version.stdout }}
+        {{ tfenv_path }}/bin/tfenv use {{ tf_latest_version.stdout }}
+      ignore_errors: yes
+      changed_when: no
+    #block tfenv install    
+
+  - name: copy Terraform Cloud token
+    copy:
+      src: files/.terraformrc
+      dest: "/home/{{ username }}"
+      decrypt: yes
+      
+  #NOsudo block 
+  become: no
+

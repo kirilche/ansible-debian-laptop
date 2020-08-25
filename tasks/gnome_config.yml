@@ -1,0 +1,50 @@
+- name: install psutil dependency
+  pip:
+    name: psutil
+    state: present
+# - name: DConf Block
+#   block:
+#   - name: Configure available keyboard layouts in Gnome
+#     dconf:
+#       key: "/org/gnome/desktop/input-sources/sources"
+#       value: "[('xkb', 'us'), ('xkb', 'ru')]"
+#       state: present
+    
+#   - name: set adwaita-dark
+#     dconf:
+#       key: "/org/gnome/desktop/interface/gtk-theme"
+#       value: "'Adwaita-dark'"
+#       state: present
+
+#   - name: change window title buttons order to left
+#     dconf:
+#       key: "/org/gnome/desktop/wm/preferences/button-layout"
+#       value: "'close,minimize,maximize:appmenu'"
+#       state: present
+
+
+#   become_user: "{{ username }}"
+
+- name: make DConf adjustments
+  dconf:
+    key: "{{ item.key | string }}"
+    value: "{{ item.value | string }}"
+    state: present
+  loop:
+  #  - { key: , value: }
+    - { key: '/org/gnome/shell/favorite-apps', value: "['org.gnome.Terminal.desktop', 'org.gnome.Nautilus.desktop', 'google-chrome.desktop', 'code.desktop', 'firefox-esr.desktop', 'org.gnome.tweaks.desktop']"}
+    - { key: '/org/gnome/desktop/input-sources/xkb-options', value: "['grp:alt_shift_toggle']" }
+    - { key: '/org/gnome/desktop/input-sources/sources', value: "[('xkb', 'us'), ('xkb', 'ru')]" }
+    - { key: '/org/gnome/desktop/interface/gtk-theme', value: "'Adwaita-dark'" }
+    - { key: '/org/gnome/desktop/wm/preferences/button-layout', value: "'close,minimize,maximize:appmenu'" }
+  become_user: "{{ username }}"
+
+- name: set default apps
+  copy:
+    src: "./files/.config/mimeapps.list"
+    dest: "/home/{{ username }}/.config/mimeapps.list"
+    backup: yes
+    mode: 0644
+    owner: "{{ username }}"
+    group: "{{ username }}"
+    

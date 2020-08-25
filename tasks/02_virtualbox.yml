@@ -1,0 +1,21 @@
+- name: NOsudo block
+  block:
+
+  - name: Download Virtualbox deb package
+    get_url:
+      url: "{{ virtualbox_download_url }}"
+      dest: files/virtualbox-6.1.deb
+      force: no
+
+  - name: check if Virtualbox installed
+    command: VBoxManage --version
+    register: virtualbox_version
+    ignore_errors: yes
+    changed_when: no
+  #NOsudo block
+  become: no
+  
+- name: install Virtualbox
+  command:
+    cmd: apt install -y ./files/virtualbox-6.1.deb   
+  when: virtualbox_version.rc != 0

@@ -1,0 +1,21 @@
+- name: NOsudo block
+  block:
+
+  - name: Download VS Code deb package
+    get_url:
+      url: "{{ vscode_download_url }}"
+      dest: files/code.deb
+      force: no
+
+  - name: check if code installed
+    command: code --version
+    register: code_version
+    ignore_errors: yes
+    changed_when: no
+  #NOsudo block 
+  become: no
+  
+- name: install VS code
+  command:
+    cmd: apt install -y ./files/code.deb   
+  when: code_version.rc != 0

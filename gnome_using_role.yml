@@ -1,0 +1,17 @@
+- hosts: all
+  roles:
+    - role: PeterMosmans.customize-gnome
+  vars:
+    gnome_user: kirilche
+
+    gnome_extensions:
+      - id: 442
+      - id: 2506
+      
+    # gnome_gsettings:
+    #   - schema: org.gnome.desktop.interface
+    #     key: monospace-font-name
+    #     value: '"Source Code Pro Medium 16"'
+    # gnome_dconf:
+    #   - key: /org/gnome/desktop/background/show-desktop-icons
+    #     value: "false"

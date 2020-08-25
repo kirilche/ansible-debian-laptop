@@ -1,0 +1,10 @@
+- name: Install Docker + Compose
+  hosts: local
+  become: yes
+  roles:
+    - geerlingguy.docker
+  vars: 
+    docker_install_compose: true
+    docker_compose_version: "1.26.2"
+    docker_users:
+    - kirilche

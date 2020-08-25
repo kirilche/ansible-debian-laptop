@@ -1,0 +1,20 @@
+- name: add bash completion
+  lineinfile:
+    path: "/home/{{ username }}/.bashrc"
+    line: "source /usr/lib/git-core/git-sh-prompt"
+    state: present
+    insertafter: EOF
+
+
+- name: add bash completion file
+  copy:
+    src: files/PS1.sh
+    dest: /etc/profile.d/PS1.sh
+    mode: 0644
+
+- name: add bash completion
+  lineinfile:
+    path: "/home/{{ username }}/.bashrc"
+    line: "source /etc/profile.d/PS1.sh"
+    state: present
+    insertafter: EOF

@@ -1,0 +1,21 @@
+- name: NOsudo block
+  block:
+
+  - name: Download Google Chrome deb package
+    get_url:
+      url: "{{ google_chrome_download_url }}"
+      dest: files/google-chrome.deb
+      force: no
+
+  - name: check if google-chrome installed
+    command: google-chrome --version
+    register: google_chrome_version
+    ignore_errors: yes
+    changed_when: no
+  #NOsudo block
+  become: no
+  
+- name: install google-chrome
+  command:
+    cmd: apt install -y ./files/google-chrome.deb   
+  when: google_chrome_version.rc != 0

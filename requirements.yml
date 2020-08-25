@@ -1,0 +1,5 @@
+# from galaxy
+- name: geerlingguy.docker
+
+- name: PeterMosmans.customize-gnome
+  src: https://github.com/PeterMosmans/ansible-role-customize-gnome

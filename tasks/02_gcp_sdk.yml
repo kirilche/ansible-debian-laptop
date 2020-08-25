@@ -1,0 +1,45 @@
+- name: NOsudo block
+  block:
+
+  - name: Download GCP SDK archive
+    get_url:
+      url: "https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-sdk-306.0.0-linux-x86_64.tar.gz"
+      dest: files/google-cloud-sdk.tar.gz
+      force: no
+
+  - name: check if gcloud installed
+    command: gcloud --version
+    register: gcloud_version
+    ignore_errors: yes
+    changed_when: no
+    
+  - name: command not found block 
+    block:
+
+    - name: Unarchive
+      unarchive:
+        src: files/google-cloud-sdk.tar.gz
+        dest: "{{ gcp_sdk_path }}"
+
+    - name: run SDK installer
+      command: "{{ gcp_sdk_path }}/google-cloud-sdk/install.sh --quiet"
+
+
+    - name: add bash completion
+      lineinfile:
+        path: "/home/{{ username }}/.bashrc"
+        line: "source {{ gcp_sdk_path }}/google-cloud-sdk/completion.bash.inc"
+        state: present
+        insertafter: EOF
+      
+    - name: add cli to $PATH
+      lineinfile:
+        path: "/home/{{ username }}/.bashrc"
+        line: "source {{ gcp_sdk_path }}/google-cloud-sdk/path.bash.inc"
+        state: present
+        insertafter: EOF
+    #block command not found    
+    when: gcloud_version.rc != 0
+
+  #NOsudo block 
+  become: no
