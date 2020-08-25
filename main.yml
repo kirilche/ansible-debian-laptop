@@ -5,7 +5,8 @@
   become: true
   vars:
     username: kirilche
-    path_to_files: /home/{{ username }}/i7-debian10-provision
+    path_to_files: /home/{{ username }}/ansible-debian-laptop
+    apt_mirror: mirror.mirohost.net
     gcp_sdk_path: /home/{{ username }}
     google_chrome_download_url: https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
     virtualbox_download_url: https://download.virtualbox.org/virtualbox/6.1.12/virtualbox-6.1_6.1.12-139181~Debian~buster_amd64.deb

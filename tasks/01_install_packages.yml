@@ -1,10 +1,10 @@
-# - name: contrib and non-free to /etc/apt/sources.list
-#   lineinfile:
-#     backup: yes
-#     path: /etc/apt/sources.list
-#     regexp: '^deb http://debian.org.ua/debian/ buster main'
-#     line: 'deb http://debian.org.ua/debian/ buster main contrib non-free'
-#     state: present
+- name: contrib and non-free to /etc/apt/sources.list
+  lineinfile:
+    backup: yes
+    path: /etc/apt/sources.list
+    regexp: '^deb http://{{ apt_mirror }}/debian/ buster main'
+    line: 'deb http://{{ apt_mirror }}/debian/ buster main contrib non-free'
+    state: present
 
 - name: setup Wifi, Net-Tools, Curl, Zip, Git, VLC, SMPlayer
   apt:
