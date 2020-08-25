@@ -19,15 +19,15 @@
     tfenv_path: /home/{{ username }}/.tfenv
   tasks:
   - import_tasks: tasks/01_install_packages.yml
-  # - import_tasks: tasks/gnome_config.yml
-  - import_tasks: tasks/git_config.yml
-  - import_tasks: tasks/02_gcp_sdk.yml
-  - import_tasks: tasks/02_google_chrome.yml
-  - import_tasks: tasks/02_virtualbox.yml
-  - import_tasks: tasks/02_vscode.yml
-  - import_tasks: tasks/03_kubectl_gcloud.yml
-  - import_tasks: tasks/04_minikube_gcloud.yml
-  # - import_tasks: tasks/04_minishift.yml
-  - import_tasks: tasks/05_terraform.yml
+  # # - import_tasks: tasks/gnome_config.yml
+  # - import_tasks: tasks/git_config.yml
+  # - import_tasks: tasks/02_gcp_sdk.yml
+  # - import_tasks: tasks/02_google_chrome.yml
+  # - import_tasks: tasks/02_virtualbox.yml
+  # - import_tasks: tasks/02_vscode.yml
+  # - import_tasks: tasks/03_kubectl_gcloud.yml
+  # - import_tasks: tasks/04_minikube_gcloud.yml
+  # # - import_tasks: tasks/04_minishift.yml
+  # - import_tasks: tasks/05_terraform.yml
 
 

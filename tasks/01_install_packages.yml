@@ -9,13 +9,13 @@
 - name: setup Wifi, Net-Tools, Curl, Zip, Git, VLC, SMPlayer
   apt:
     pkg:
-      - firmware-iwlwifi
+      # - firmware-iwlwifi
       - net-tools
       - curl
       - zip
-      - git
-      - vlc
-      - smplayer
+      # - git
+      # - vlc
+      # - smplayer
     
     update_cache: yes
     state: latest
